@@ -13,13 +13,13 @@ def knapsack(capacity: int, n: int) -> int:
 
     # have we seen this before, or do we have to compute it?  if so, let's use it from the memo
     if (capacity, weights[n-1]) in memo:
-        return memo[capacity, weights[n-1]]
+        return memo[(capacity, n-1)]
 
     # we have room for it but let's see if it's optimal to add
     keep = values[n-1] + knapsack(capacity-weights[n-1], n-1)
     dont_keep = knapsack(capacity, n-1)
     max_val = max(keep, dont_keep)
-    memo[capacity, weights[n-1]] = max_val
+    memo[(capacity, n-1)] = max_val
     return max_val
 
 
@@ -29,6 +29,10 @@ if __name__ == "__main__":
     capacity = 5
 
     memo = {}
+
+    values = [60, 100, 120]
+    weights = [10, 20, 30]
+    capacity = 50 
 
     print(f"given weights {weights}\nof values {values}\nand a knapsack of capacity {capacity}")
     print(f"our knapsack can hold an optimized value of {knapsack(capacity, len(weights))}")
